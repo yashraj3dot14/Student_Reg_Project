@@ -1,0 +1,82 @@
+{% extends 'studApp/base.html' %}
+
+{% block title %}
+Search Results
+{% endblock %}
+
+{% block content %}
+<div class="studentDetails">
+    <!-- Search functionality -->
+    <form method="get" action="{% url 'student_search' %}" class="form-inline">
+        <div class="input-group">
+            <input name="student" id="student" type="text" placeholder="Search by name" class="form-control form-control-lg" />
+            <div class="input-group-append">
+            <button class="btn btn-dark btn-lg">Search</button>
+        </div>
+        </div>
+    </form>
+
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <td>Roll No</td>
+        <td>Name</td>
+        <td>Class&Div</td>
+        <td>School</td>
+        <td>Mobile</td>
+        <td>Address</td>
+    </thead>
+
+    <tbody>
+    <h2>Students Search Result</h2> <a href="{% url 'student_form_render'%}" class="btn btn-secondary">Add Student<i class="fas fa-user-plus"></i></a>
+
+    {% for st in students %}
+        <tr>
+            <td>{{ st.roll_no }}</td>
+            <td>{{ st.name }} <button  id="loadMore"  onclick="marks()" class="btn btn-dark btn-sm px-0 p-0">more<i class="fas fa-file-download" style="user-select: auto;"></i> </button></td>
+            <td>{{ st.classdetail }}</td>
+            <td>{{ st.school }}</td>
+            <td>{{ st.mobile }}</td>
+            <td>{{ st.address }}
+                <div id="marks" style="display: none">
+                    st.studentAcademic.maths
+
+                {% for ac in academic %} <!-- 'studentAcademic' is related_name in models.py of foreign key-->
+                <p>Maths: {{ ac.maths }}</p>
+                <p>Physics: {{ ac.physics }}</p>
+                <p>Chemistry: {{ ac.chemistry }}</p>
+                <p>Biology: {{ ac.biology }}</p>
+                <p>English: {{ ac.english }}</p>
+                {% endfor %}
+                </div>
+            </td>
+            <td><a href="{% url 'student_update' st.roll_no %}" class="btn text-secondary px-0"><i class="fas fa-user-edit"></i></a> </td>
+            <td>
+                <form action="{% url 'student_delete' st.roll_no %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit"class="btn"><i class="fas fa-trash fa-lg"></i></button>
+                </form>
+            </td>
+
+        </tr>
+    </tbody>
+    <hr/>
+
+    {% endfor %}
+</table>
+</div>
+
+{% endblock %}
+
+{% block script %}
+    //const loadmore = document.querySelector("#loadMore");
+    function marks() {
+        const div = document.getElementById("marks");
+        if (div.style.display != "none") {
+            div.style.display = "none";
+            console.log('disabling');
+        } else {
+            div.style.display = "block";
+            console.log('enabling');
+        }
+    }
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'studApp/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+Student From
+{% endblock %}
+
+{% block content %}
+{% for message in messages %}
+    <strong>{{ message }}</strong>
+{% endfor %}
+<form action="" method="post"  >
+    {% csrf_token %}
+    <a href="{% url 'student_list' %}" class="btn btn-secondary p-1">All students <i class="fas fa-list"></i></a>
+    <div class="row">
+        <div class="col-md-4">
+            {{ form1.roll_no|as_crispy_field }}
+        </div>
+        <div class="col-md-8">
+            {{ form1.name|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            {{ form1.classdetail|as_crispy_field }}
+        </div>
+        <div class="col-md-8">
+            {{ form1.school|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            {{ form1.mobile|as_crispy_field }}
+        </div>
+        <div class="col-md-8">
+            {{ form1.address|as_crispy_field }}
+        </div>
+    </div>
+
+    <input type="submit"   name="studentInfo" value="Submit" class="btn btn-success btn-block btn-lg m-4" onclick="return alert('Student info has been added, add marks')">
+</form>
+
+<form action="" method="post"  >
+    <h2> Academic details</h2>
+    {% csrf_token %}
+    <div>
+        {{ form2.student }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            {{ form2.maths|as_crispy_field }}
+        </div>
+        <div class="col-md-4">
+            {{ form2.physics|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            {{ form2.chemistry|as_crispy_field }}
+        </div>
+        <div class="col-md-4">
+            {{ form2.biology|as_crispy_field }}
+        </div>
+        <div class="col-md-4">
+            {{ form2.english|as_crispy_field }}
+        </div>
+    </div>
+
+
+    <input type="submit" name="studentAcademic" value="Insert" class="btn btn-success btn-block btn-lg m-4" onclick="return alert('Student academic has been inserted')">
+</form>
+
+
+
+{% endblock %}
